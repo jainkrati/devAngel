@@ -11,6 +11,7 @@ import NumberFormat from 'react-number-format';
 // project import
 import Dot from 'components/@extended/Dot';
 import { Card } from '../../../node_modules/@mui/material/index';
+import { makeStyles } from '../../../node_modules/@mui/styles/index';
 
 function createData(title, description, proposals, status) {
     return { title, description, proposals, status };
@@ -143,9 +144,18 @@ OrderStatus.propTypes = {
 
 // ==============================|| ORDER TABLE ||============================== //
 
+const getStyles = makeStyles({
+    card: {
+        cursor: 'pointer',
+        borderRadius: '5px',
+        '&:hover': {
+            boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)'
+        }
+    }
+});
 export default function QuestionsTable(params) {
     const navigate = useNavigate();
-
+    const classes = getStyles();
     rows = params.items || rows;
     const [order] = useState('asc');
     const [orderBy] = useState('trackingNo');
@@ -160,12 +170,8 @@ export default function QuestionsTable(params) {
         navigate(`/question/${rows[index].questionId}`);
     }
 
-    if(rows.length == 0) {
-        return (
-            <Box>
-                No Items found
-            </Box>
-        )
+    if (rows.length == 0) {
+        return <Box>No Items found</Box>;
     }
 
     return (
@@ -199,6 +205,7 @@ export default function QuestionsTable(params) {
                             const labelId = `enhanced-table-checkbox-${index}`;
                             return (
                                 <TableRow
+                                    className={classes.card}
                                     hover
                                     role="checkbox"
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -206,12 +213,15 @@ export default function QuestionsTable(params) {
                                     tabIndex={-1}
                                     key={row.title + index}
                                     selected={isItemSelected}
-                                    style={{ cursor: 'pointer' }}
                                     onClick={() => setRow(index)}
                                 >
                                     <TableCell style={{ overflow: 'hidden' }} colSpan={3}>
-                                        <Typography variant="h5" fullwidth>{row.title}</Typography>
-                                        <Typography variant="subtitle" fullwidth>{row.description}</Typography>
+                                        <Typography variant="h5" fullwidth>
+                                            {row.title}
+                                        </Typography>
+                                        <Typography variant="subtitle" fullwidth>
+                                            {row.description}
+                                        </Typography>
                                     </TableCell>
                                     <TableCell align="right">{row.bounty} USDT</TableCell>
                                     <TableCell align="right">
