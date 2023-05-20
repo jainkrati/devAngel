@@ -12,6 +12,8 @@ const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 const MyQuestions = Loadable(lazy(() => import('pages/extra-pages/MyQuestions')));
 const AskQuestion = Loadable(lazy(() => import('pages/extra-pages/AskQuestion')));
 const LatestQuestions = Loadable(lazy(() => import('pages/extra-pages/LatestQuestions')));
+const SolvedQuestions = Loadable(lazy(() => import('pages/extra-pages/SolvedQuestions')));
+
 const Question = Loadable(lazy(() => import('pages/extra-pages/Question')));
 const LivePeer = Loadable(lazy(() => import('pages/extra-pages/LivePeer')));
 
@@ -68,6 +70,10 @@ const MainRoutes = {
         {
             path: 'latest-questions',
             element: <LatestQuestions />
+        },
+        {
+            path: 'solved-questions',
+            element: <SolvedQuestions />
         },
         {
             path: 'profile/:id',

@@ -1,11 +1,12 @@
 // assets
 import { QuestionOutlined, QuestionCircleOutlined, QuestionCircleFilled } from '@ant-design/icons';
-
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 // icons
 const icons = {
     QuestionOutlined,
     QuestionCircleOutlined,
-    QuestionCircleFilled
+    QuestionCircleFilled,
+    QuestionAnswerIcon
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -37,6 +38,14 @@ const questions = {
             type: 'item',
             url: '/my-questions',
             icon: icons.QuestionCircleOutlined,
+            breadcrumbs: true
+        },
+        {
+            id: 'solved-questions',
+            title: 'Solved Questions',
+            type: 'item',
+            url: '/solved-questions',
+            icon: icons.QuestionAnswerIcon,
             breadcrumbs: true
         }
     ]
