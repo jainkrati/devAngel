@@ -1,8 +1,8 @@
-import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
+import TextField from '@mui/material/TextField';
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const DevAutocomplete = ({ placeholder, getSuggestions }) => {
     const [open, setOpen] = useState(false);

@@ -12,16 +12,14 @@ import { useState } from 'react';
 import { Container } from '../../node_modules/@mui/material/index';
 import hooks from '../hooks';
 
-const ScrollableCards = ({ data }) => {
+const ScrollableCards = ({ data, handleCardClick }) => {
     const [offset, setOffset] = useState(1);
     const keySizes = hooks.useScreenSize();
 
     // return the cards to be shown, max is 3
-    const getVisibleCards = (data) => {
+    const getVisibleCards = () => {
         const maxCards = (keySizes[1] && 1) || (keySizes[2] && 2) || (keySizes[3] && 3) || 3;
-        if (!data.length) {
-            return [];
-        } else if (data.length <= maxCards) {
+        if (!data.length || data.length <= maxCards) {
             return data;
         } else {
             return data.filter((card, index) => {
@@ -54,8 +52,8 @@ const ScrollableCards = ({ data }) => {
                 {visibleCards.length > 0 ? (
                     visibleCards.map((item, index) => (
                         <Grid item key={index}>
-                            <Card>
-                                <CardMedia component="video" alt="green iguana" height="140" src={item.url} />
+                            <Card onClick={(item) => handleCardClick('latestQuestions', item)}>
+                                <CardMedia component="video" alt="green iguana" height="140" src={item.url} controls preload="metadata" />
                                 <CardContent>
                                     <Typography gutterBottom variant="h5" component="div">
                                         {item.text}
@@ -83,7 +81,8 @@ const ScrollableCards = ({ data }) => {
 };
 
 ScrollableCards.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.array,
+    handleCardClick: PropTypes.func
 };
 
 export default ScrollableCards;
