@@ -1,3 +1,4 @@
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Card } from '@mui/material';
 import Button from '@mui/material/Button';
 import CardActions from '@mui/material/CardActions';
@@ -8,7 +9,6 @@ import ScrollableCards from 'components/ScrollableCards';
 import { useState } from 'react';
 import DevAutocomplete from '../../components/DevAutocomplete';
 import MainCard from '../../components/MainCard';
-
 const LQData = [
     { url: 'https://www.youtube.com/embed/QFaFIcGhPoM?list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3', text: 'Intro1' },
     { url: 'https://www.youtube.com/watch?v=9hb_0TZ_MVI&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=2&pp=iAQB', text: 'Intro2' },
@@ -39,21 +39,24 @@ const SolvedQuestions = () => {
     return (
         <MainCard>
             {selectedCard ? (
-                <Card>
-                    <CardMedia component="video" alt="green iguana" height="140" src={selectedCard?.url} controls preload="metadata" />
-                    <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                            {selectedCard?.text}
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                            {selectedCard?.text}
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small">Share</Button>
-                        <Button size="small">Learn More</Button>
-                    </CardActions>
-                </Card>
+                <>
+                    <ArrowBackIcon sx={{ cursor: 'pointer' }} onClick={() => setSelectedCard(null)}></ArrowBackIcon>
+                    <Card>
+                        <CardMedia component="video" alt="green iguana" height="140" src={selectedCard?.url} controls preload="metadata" />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">
+                                {selectedCard?.text}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {selectedCard?.text}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button size="small">Share</Button>
+                            <Button size="small">Learn More</Button>
+                        </CardActions>
+                    </Card>
+                </>
             ) : (
                 <>
                     <DevAutocomplete placeholder={placeholder} getSuggestions={getSuggestions}></DevAutocomplete>
