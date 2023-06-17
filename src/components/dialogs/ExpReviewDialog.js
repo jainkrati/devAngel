@@ -1,5 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import { useState } from 'react';
 import ReviewQuestionWithStar from '../ReviewQWithStar';
 
@@ -77,7 +78,7 @@ const ExpertReviewDialog = ({ open, handleClose }) => {
             case 'paySuccess':
                 dialogTitle = 'Congratulations!';
                 dialogText = 'Your payment was successful!';
-                content = <ThumbUpIcon color="success"></ThumbUpIcon>;
+                content = <Box>{/* <image src={celebrate} alt="party" /> */}</Box>;
                 actions = <></>;
                 break;
         }
@@ -118,9 +119,9 @@ const ExpertReviewDialog = ({ open, handleClose }) => {
     }
 
     return (
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog open={open} onClose={handleClose} br={'0.5em'}>
             <DialogTitle sx={{ textAlign: 'center', fontSize: '1.2rem' }}>
-                {dialogTitle}
+                <Typography variant="h4">{dialogTitle}</Typography>
                 <IconButton
                     aria-label="close"
                     onClick={handleClose}
@@ -135,7 +136,9 @@ const ExpertReviewDialog = ({ open, handleClose }) => {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                <DialogContentText sx={{ textAlign: 'center' }}>{dialogText}</DialogContentText>
+                <DialogContentText sx={{ textAlign: 'center' }}>
+                    <Typography variant="h6">{dialogText}</Typography>
+                </DialogContentText>
                 {content}
             </DialogContent>
             {actions}

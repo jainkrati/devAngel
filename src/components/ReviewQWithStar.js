@@ -1,14 +1,15 @@
+import Box from '@mui/material/Box';
 import Chip from '@mui/material/Chip';
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/system/Stack';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-
 const styles = {
     alignItems: 'center',
     display: 'flex'
 };
+
 const ReviewQuestionWithStar = ({ id, question, maxRating = 5, topics, ratingChanged }) => {
     const [rating, setRating] = useState({
         topics: Object.assign([], topics),
@@ -34,12 +35,12 @@ const ReviewQuestionWithStar = ({ id, question, maxRating = 5, topics, ratingCha
         ratingChanged({ id: id, type: 'topic', question: changedTopic.name, rating: newRating });
     };
     return (
-        <>
-            <Typography component="legend">
+        <Box m={2}>
+            <Typography variant="subtitle1">
                 {id + 1}. {question}
             </Typography>
             {topics && topics.length ? (
-                <Stack direction="row" flexWrap="wrap" useFlexGap={true} spacing={{ xs: 1, sm: 2 }}>
+                <Stack direction="row" flexWrap="wrap" useFlexGap={true} spacing={{ xs: 1, sm: 2 }} sx={{ ml: '0.5em', mt: '0.5em' }}>
                     {topics.map((topic, index) => (
                         <div key={index} style={arrangeTopic}>
                             <Chip label={topic.name} sx={[{ backgroundColor: 'black', color: 'white' }]} />
@@ -62,7 +63,7 @@ const ReviewQuestionWithStar = ({ id, question, maxRating = 5, topics, ratingCha
                     ))}
                 </Stack>
             ) : (
-                <Stack direction="row" sx={{ alignItems: 'center' }}>
+                <Stack direction="row" sx={{ alignItems: 'center', ml: '0.5em' }}>
                     <Rating
                         max={maxRating}
                         value={rating.rating}
@@ -78,7 +79,7 @@ const ReviewQuestionWithStar = ({ id, question, maxRating = 5, topics, ratingCha
                     </Typography>
                 </Stack>
             )}
-        </>
+        </Box>
     );
 };
 
