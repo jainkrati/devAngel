@@ -5,7 +5,13 @@ export default function IconButton(theme) {
         MuiIconButton: {
             styleOverrides: {
                 root: {
-                    borderRadius: 4
+                    borderRadius: 4,
+                    backgroundColor: '#25282c',
+                    color: '#5d5dff',
+                    '&:hover': {
+                        backgroundColor: '#5d5dff',
+                        color: '#ebf1f5'
+                    }
                 },
                 sizeLarge: {
                     width: theme.spacing(5.5),

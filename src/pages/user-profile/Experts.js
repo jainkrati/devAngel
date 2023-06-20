@@ -1,23 +1,17 @@
 // project import
+import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import CardHeader from '@mui/material/CardHeader';
+import Typography from '@mui/material/Typography';
 
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import Utils from 'utils/utils';
+import { MessageOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { VideoCameraOutlined, MessageOutlined } from '@ant-design/icons';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Utils from 'utils/utils';
 
-import avatar1 from 'assets/images/users/avatar-1.png';
-import avatar2 from 'assets/images/users/avatar-2.png';
-import avatar3 from 'assets/images/users/avatar-3.png';
-import avatar4 from 'assets/images/users/avatar-4.png';
-import { Avatar, FormControl, Container, Stack, Grid } from '../../../node_modules/@mui/material/index';
+import { Avatar, Grid } from '../../../node_modules/@mui/material/index';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
@@ -55,7 +49,7 @@ const Experts = () => {
             {expertsList.map((expert, index) => {
                 if (userId === expert.userAddress) return <></>;
                 return (
-                    <Grid item key={expert.id+index}>
+                    <Grid item key={expert.id + index}>
                         <Card sx={{ maxWidth: 300, minWidth: 300 }} style={{ flex: 1 }}>
                             <CardHeader
                                 style={{ cursor: 'pointer' }}
@@ -65,11 +59,11 @@ const Experts = () => {
                                     </Avatar>
                                 }
                                 title={
-                                    <Typography gutterBottom variant="h5" component="div" mb="-3px">
+                                    <Typography gutterBottom variant="h4" component="div" mb="-3px">
                                         {expert.name}
                                     </Typography>
                                 }
-                                subheader={`Reputation: ${expert.reputation} | Rating: ${expert.rating}/10`}
+                                subheader={`Reputation: ${expert.reputation}`}
                                 onClick={() => navigate(`/profile/${expert.userAddress}`)}
                             />
                             <CardActions>

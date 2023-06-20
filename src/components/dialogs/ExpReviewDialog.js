@@ -1,5 +1,4 @@
 import CloseIcon from '@mui/icons-material/Close';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -9,8 +8,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
+import celebrateImage from '../../assets/images/party.png';
 import ReviewQuestionWithStar from '../ReviewQWithStar';
-
 const topics = [
     { name: 'Blockchain', rating: 0 },
     { name: 'Development', rating: 0 },
@@ -78,7 +77,11 @@ const ExpertReviewDialog = ({ open, handleClose }) => {
             case 'paySuccess':
                 dialogTitle = 'Congratulations!';
                 dialogText = 'Your payment was successful!';
-                content = <Box>{/* <image src={celebrate} alt="party" /> */}</Box>;
+                content = (
+                    <p style={{ textAlign: 'center', marginBottom: 'unset' }}>
+                        <img src={celebrateImage} alt="party" />
+                    </p>
+                );
                 actions = <></>;
                 break;
         }
@@ -120,7 +123,7 @@ const ExpertReviewDialog = ({ open, handleClose }) => {
 
     return (
         <Dialog open={open} onClose={handleClose} br={'0.5em'}>
-            <DialogTitle sx={{ textAlign: 'center', fontSize: '1.2rem' }}>
+            <DialogTitle sx={{ textAlign: 'center', fontSize: '1.2rem', marginRight: '0.5em' }}>
                 <Typography variant="h4">{dialogTitle}</Typography>
                 <IconButton
                     aria-label="close"

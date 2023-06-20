@@ -14,7 +14,8 @@ import Typography from './typography';
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
 export default function ThemeCustomization({ children }) {
-    const theme = Palette('dark', 'default');
+    const themeType = 'dark'; // 'light' OR 'dark'
+    const theme = Palette(themeType, 'default');
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const themeTypography = Typography(`'Public Sans', sans-serif`);
