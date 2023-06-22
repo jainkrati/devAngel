@@ -56,7 +56,19 @@ const Palette = (mode) => {
                           default: paletteColor.grey.A50
                       }
                   }
-                : {})
+                : {
+                      text: {
+                          primary: paletteColor.darkTheme.lightBlue,
+                          secondary: paletteColor.darkTheme.irogonBlue
+                      },
+                      background: {
+                          default: paletteColor.darkTheme.deepBlack,
+                          paper: paletteColor.darkTheme.paperBlack
+                      },
+                      action: {
+                          hover: paletteColor.darkTheme.blueCharcoal
+                      }
+                  })
         }
     });
 };
