@@ -7,12 +7,13 @@
         "@ant-design/colors": "^6.0.0",
         "@ant-design/icons": "^4.7.0",
         "@emotion/cache": "^11.10.3",
-        "@emotion/react": "^11.10.4",
-        "@emotion/styled": "^11.10.4",
+        "@emotion/react": "^11.11.0",
+        "@emotion/styled": "^11.11.0",
         "@huddle01/huddle01-iframe": "^0.0.8",
         "@livepeer/video-nft": "^0.3.6",
+        "@mui/icons-material": "^5.11.16",
         "@mui/lab": "^5.0.0-alpha.100",
-        "@mui/material": "^5.10.6",
+        "@mui/material": "^5.13.1",
         "@mui/styles": "^5.10.6",
         "@pushprotocol/restapi": "^0.2.1",
         "@pushprotocol/uiweb": "^0.2.3",
@@ -75,16 +76,16 @@
     },
     "browserslist": {
         "production": [
-          "chrome >= 67",
-          "edge >= 79",
-          "firefox >= 68",
-          "opera >= 54",
-          "safari >= 14"
+            "chrome >= 67",
+            "edge >= 79",
+            "firefox >= 68",
+            "opera >= 54",
+            "safari >= 14"
         ],
         "development": [
-          "last 1 chrome version",
-          "last 1 firefox version",
-          "last 1 safari version"
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
         ]
     },
     "devDependencies": {

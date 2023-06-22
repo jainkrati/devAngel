@@ -1,31 +1,22 @@
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
 import axios from 'axios';
-
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 // material-ui
 import { Typography } from '@mui/material';
 import Utils from 'utils/utils';
-
+import { ExpertReviewDialog } from '../../components/dialogs';
 import HuddleApp from '../../huddle/huddleApp';
 
 // project import
 import MainCard from 'components/MainCard';
-import {
-    Avatar,
-    Grid,
-    Stack,
-    Button,
-    Card,
-    CardContent,
-    CardHeader} from '../../../node_modules/@mui/material/index';
+import { Avatar, Button, Card, CardContent, CardHeader, Grid, Stack } from '../../../node_modules/@mui/material/index';
 
-import Chat from '../extra-pages/chat/chat';
 import LivePeerApp from 'livepeer/LivePeerApp';
+import Chat from '../extra-pages/chat/chat';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const tags = ['Polygon', 'Huddle01'];
-
 const Connect = () => {
     let { id } = useParams();
     const userId = id;
@@ -61,7 +52,7 @@ const Connect = () => {
     // const question = Utils.createQuestion(123, 'the title issfor the quesiotin', 'seome descriptions is valid', [123, 125], 0, ['Polygon']);
     const [showHuddle, setShowHuddle] = useState(false);
     const [livePeer, setLivePeer] = useState(false);
-
+    const [showReview, setShowReview] = useState(false);
     function startHuddle() {
         setShowHuddle(true);
     }
@@ -103,16 +94,27 @@ const Connect = () => {
                     avatar={<Avatar aria-label="recipe" src={null} alt="Krati"></Avatar>}
                     action={
                         showHuddle ? (
-                            <Button variant="contained" aria-label="settings" onClick={startLivePeer}>
-                                Mint Recording as NFT
-                            </Button>
+                            <>
+                                <Button
+                                    sx={{ marginRight: '0.5em' }}
+                                    variant="contained"
+                                    aria-label="settings"
+                                    onClick={() => setShowReview(true)}
+                                >
+                                    Review Huddle
+                                </Button>
+                                <Button variant="contained" aria-label="settings" onClick={startLivePeer}>
+                                    Mint Recording as NFT
+                                </Button>
+                                <ExpertReviewDialog open={showReview} handleClose={() => setShowReview(false)}></ExpertReviewDialog>
+                            </>
                         ) : (
                             <Button variant="contained" aria-label="settings" onClick={startHuddle}>
                                 Start Huddle
                             </Button>
                         )
                     }
-                    title={"Connected to "+userDetails.name}
+                    title={'Connected to ' + userDetails.name}
                     subheader="Active 2 minutes ago."
                 />
                 <CardContent>{livePeer ? getLivePeer() : getHuddle()}</CardContent>
@@ -128,7 +130,11 @@ const Connect = () => {
                         <Stack>
                             <Grid container spacing={1}>
                                 <Grid item>
-                                    <Avatar src={userDetails.pictureCID} alt={userDetails.name} style={{ width: '32px', height: '32px' }}></Avatar>
+                                    <Avatar
+                                        src={userDetails.pictureCID}
+                                        alt={userDetails.name}
+                                        style={{ width: '32px', height: '32px' }}
+                                    ></Avatar>
                                 </Grid>
                                 <Grid item mt={1}>
                                     <Typography variant="h5" mt={0}>
@@ -148,7 +154,7 @@ const Connect = () => {
                     )}
                 </Stack>
             </MainCard>
-            { userDetails ? showVideoCall() : <></> }
+            {userDetails ? showVideoCall() : <></>}
         </>
     );
 };
