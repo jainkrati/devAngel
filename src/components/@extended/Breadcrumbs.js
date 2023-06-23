@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 // material-ui
-import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 import { Grid, Typography } from '@mui/material';
+import MuiBreadcrumbs from '@mui/material/Breadcrumbs';
 
 // project imports
 import MainCard from '../MainCard';
@@ -73,11 +73,11 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
         // main
         if (item.breadcrumbs !== false) {
             breadcrumbContent = (
-                <MainCard border={false} sx={{ mb: 3, bgcolor: 'transparent' }} {...others} content={false}>
+                <MainCard border={false} sx={{ mb: 3 }} {...others} content={false}>
                     <Grid container direction="column" justifyContent="flex-start" alignItems="flex-start" spacing={1}>
                         <Grid item>
                             <MuiBreadcrumbs aria-label="breadcrumb">
-                                <Typography component={Link} to="/" color="textSecondary" variant="h6" sx={{ textDecoration: 'none' }}>
+                                <Typography component={Link} to="/" color="text.primary" variant="h6" sx={{ textDecoration: 'none' }}>
                                     Home
                                 </Typography>
                                 {mainContent}

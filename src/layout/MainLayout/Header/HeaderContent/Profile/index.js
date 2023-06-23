@@ -2,39 +2,21 @@ import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
 import axios from '../../../../../../node_modules/axios/index';
 // material-ui
+import { Box, ButtonBase, CardContent, ClickAwayListener, Grid, Paper, Popper, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import {
-    Avatar,
-    Box,
-    ButtonBase,
-    CardContent,
-    ClickAwayListener,
-    Grid,
-    IconButton,
-    Paper,
-    Popper,
-    Stack,
-    Tab,
-    Tabs,
-    Typography
-} from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
 import Transitions from 'components/@extended/Transitions';
+import MainCard from 'components/MainCard';
 import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
 
-import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 
 // assets
-import avatar1 from 'assets/images/users/avatar-1.png';
-import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import Utils from 'utils/utils';
 import { useNavigate } from 'react-router-dom';
-import { setUserAgent } from 'react-device-detect';
- 
+import Utils from 'utils/utils';
+
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
     return (
@@ -165,12 +147,20 @@ const Profile = () => {
             </Modal>
 
             <ButtonBase
-                sx={{
-                    p: 0.25,
-                    bgcolor: open ? iconBackColorOpen : 'transparent',
-                    borderRadius: 1,
-                    '&:hover': { bgcolor: 'secondary.lighter' }
-                }}
+                sx={
+                    theme.palette.mode === 'light'
+                        ? {
+                              p: 0.25,
+                              bgcolor: open ? iconBackColorOpen : 'transparent',
+                              borderRadius: 1,
+                              '&:hover': { bgcolor: 'secondary.lighter' }
+                          }
+                        : {
+                              bgcolor: 'background.secondary',
+                              color: 'text.secondary',
+                              '&:hover': { bgcolor: '#25282c' }
+                          }
+                }
                 aria-label="open profile"
                 ref={anchorRef}
                 aria-controls={open ? 'profile-grow' : undefined}

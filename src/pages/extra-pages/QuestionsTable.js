@@ -1,16 +1,14 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // material-ui
-import { Box, Link, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 
 // third-party
-import NumberFormat from 'react-number-format';
 
 // project import
 import Dot from 'components/@extended/Dot';
-import { Card } from '../../../node_modules/@mui/material/index';
 import { makeStyles } from '../../../node_modules/@mui/styles/index';
 
 function createData(title, description, proposals, status) {
@@ -219,7 +217,7 @@ export default function QuestionsTable(params) {
                                         <Typography variant="h5" fullwidth>
                                             {row.title}
                                         </Typography>
-                                        <Typography variant="subtitle" fullwidth>
+                                        <Typography variant="subtitle" color="text.secondary" fullwidth>
                                             {row.description}
                                         </Typography>
                                     </TableCell>

@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // project import
 import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
+import Mycommunities from 'pages/community/MyCommunities';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -28,6 +29,9 @@ const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
 
+// render - Communities
+const MyCommunities = Loadable(lazy(() => import('pages/community/MyCommunities')));
+const Explore = Loadable(lazy(() => import('pages/community/Explore')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -106,6 +110,14 @@ const MainRoutes = {
         {
             path: 'icons/ant',
             element: <AntIcons />
+        },
+        {
+            path: 'mycommunities',
+            element: <Mycommunities />
+        },
+        {
+            path: 'explore',
+            element: <Explore />
         }
     ]
 };

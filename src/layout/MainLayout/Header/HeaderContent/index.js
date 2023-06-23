@@ -1,12 +1,10 @@
 // material-ui
-import { Box, IconButton, Link, useMediaQuery } from '@mui/material';
-import { GithubOutlined } from '@ant-design/icons';
+import { Box, useMediaQuery } from '@mui/material';
 
 // project import
-import Search from './Search';
-import Profile from './Profile';
-import Notification from './Notification';
 import MobileSection from './MobileSection';
+import Profile from './Profile';
+import Search from './Search';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 import { Chat } from '@pushprotocol/uiweb';
@@ -20,7 +18,7 @@ const HeaderContent = () => {
             {!matchesXs && <Search />}
             {matchesXs && <Box sx={{ width: '100%', ml: 1 }} />}
 
-            <Notification />
+            {/* <Notification /> */}
             <Chat
                 account={Utils.getMyAddress()} //user address
                 supportAddress="0x2C0a5B16b9C51ac466ee50baF95b6176Fb9f2b36" //support address

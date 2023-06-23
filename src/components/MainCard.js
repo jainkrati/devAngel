@@ -2,8 +2,8 @@ import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
 import { Card, CardContent, CardHeader, Divider, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // project import
 import Highlighter from './third-party/Highlighter';
@@ -46,6 +46,7 @@ const MainCard = forwardRef(
                 {...others}
                 sx={{
                     ...sx,
+                    backgroundColor: theme.palette.mode === 'dark' ? 'background.default' : 'background.paper',
                     border: border ? '1px solid' : 'none',
                     borderRadius: 2,
                     borderColor: theme.palette.mode === 'dark' ? theme.palette.divider : theme.palette.grey.A800,

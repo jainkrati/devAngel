@@ -85,7 +85,14 @@ const Theme = (colors) => {
             darker: green[9],
             contrastText
         },
-        grey: greyColors
+        grey: greyColors,
+        darkTheme: {
+            lightBlue: '#d9e3ea',
+            irogonBlue: '#9ba9b4',
+            deepBlack: '#151719',
+            paperBlack: '#25282B',
+            blueCharcoal: '#25282c'
+        }
     };
 };
 

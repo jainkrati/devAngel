@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import { forwardRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 // material-ui
-import { useTheme } from '@mui/material/styles';
 import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 // project import
 import { activeItem } from 'store/reducers/menu';
@@ -49,7 +49,7 @@ const NavItem = ({ item, level }) => {
         // eslint-disable-next-line
     }, []);
 
-    const textColor = 'text.primary';
+    const textColor = 'text.secondary';
     const iconSelectedColor = 'primary.main';
 
     return (

@@ -10,19 +10,35 @@ export default function Button(theme) {
     return {
         MuiButton: {
             defaultProps: {
-                disableElevation: true
+                disableElevation: true,
+                disableRipple: true
             },
-            styleOverrides: {
-                root: {
-                    fontWeight: 400
-                },
-                contained: {
-                    ...disabledStyle
-                },
-                outlined: {
-                    ...disabledStyle
-                }
-            }
+            ...(theme.palette.mode == 'light'
+                ? {
+                      styleOverrides: {
+                          root: {
+                              fontWeight: 400
+                          },
+                          contained: {
+                              ...disabledStyle
+                          },
+                          outlined: {
+                              ...disabledStyle
+                          }
+                      }
+                  }
+                : {
+                      styleOverrides: {
+                          root: {
+                              fontWeight: 400,
+                              backgroundColor: '#5D5DF3',
+                              color: 'white',
+                              '&:hover': {
+                                  backgroundColor: theme.palette.primary ? '#4b4acf' : '#25282c'
+                              }
+                          }
+                      }
+                  })
         }
     };
 }
