@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { useRef, useState } from 'react';
-import axios from '../../../../../../node_modules/axios/index';
 // material-ui
 import { Box, ButtonBase, CardContent, ClickAwayListener, Grid, Paper, Popper, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -12,11 +11,10 @@ import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
 
 import Modal from '@mui/material/Modal';
-
 // assets
 import { useNavigate } from 'react-router-dom';
 import Utils from 'utils/utils';
-
+import { getOrCreateUser } from '../../../../../api/firestore-utils';
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
     return (
@@ -59,7 +57,9 @@ const Profile = () => {
     const handleLogout = async () => {
         if (window.ethereum) {
             if (address === null) {
-                window.ethereum.request({ method: 'eth_requestAccounts' }).then((res) => accountChangeHandler(res[0]));
+                window.ethereum.request({ method: 'eth_requestAccounts' }).then((res) => {
+                    accountChangeHandler(res[0]);
+                });
             } else {
                 setAddress(null);
                 Utils.setMyAddress(null);
@@ -78,18 +78,8 @@ const Profile = () => {
     };
 
     async function queryUserDetails(userAddress) {
-        const response = await axios.post(Utils.graphAPI, {
-            query: `{
-                userUpdateds(where: { userAddress: "${userAddress}"}, first: 5) {
-                    id
-                    userAddress
-                    name
-                    pictureCID
-                    rating
-                    reputation
-                }
-            }`
-        });
+        let response = await getOrCreateUser(userAddress); //getDocument('users', userAddress);
+
         return response;
     }
     const [openModal, setOpenModal] = useState(false);
@@ -101,8 +91,7 @@ const Profile = () => {
         console.log('hello' + account);
 
         queryUserDetails(account).then((response) => {
-            let userDetails = response.data.data.userUpdateds[0];
-            // console.log("hello"+userDetails.name)
+            let userDetails = response;
             if (!userDetails || !userDetails.name) {
                 console.log('New user signup');
                 const newname = prompt('New user signup, Please provide your name');

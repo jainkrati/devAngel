@@ -2,39 +2,17 @@
 import { Typography } from '@mui/material';
 import Utils from 'utils/utils';
 
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { VideoCameraOutlined, MessageOutlined } from '@ant-design/icons';
+import { MessageOutlined } from '@ant-design/icons';
 // project import
 import MainCard from 'components/MainCard';
-import {
-    Avatar,
-    AvatarGroup,
-    Grid,
-    Stack,
-    Button,
-    Autocomplete,
-    TextField,
-    Box,
-    InputLabel,
-    Input,
-    FormHelperText,
-    Badge,
-    CardActions,
-    CardContent,
-    Alert
-} from '../../../node_modules/@mui/material/index';
+import { Alert, Avatar, Button, CardActions, CardContent, Grid } from '../../../node_modules/@mui/material/index';
 
-import avatar1 from 'assets/images/users/avatar-1.png';
-import avatar2 from 'assets/images/users/avatar-2.png';
-import avatar3 from 'assets/images/users/avatar-3.png';
-import avatar4 from 'assets/images/users/avatar-4.png';
-import { FormControl } from '../../../node_modules/@mui/material/index';
-
-import QuestionsTable from '../extra-pages/QuestionsTable';
 import { useNavigate } from 'react-router-dom';
+import QuestionsTable from '../extra-pages/QuestionsTable';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
@@ -48,6 +26,13 @@ const UserProfile = (userAddress) => {
     const [fetchState, setFetchState] = useState(false);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (userAddress) {
+            getUserDetails();
+            getUserQuestions();
+        }
+    }, []);
 
     if (!Utils.getMyAddress()) {
         return (
@@ -107,11 +92,11 @@ const UserProfile = (userAddress) => {
             console.error(error);
         }
     }
-    if (!fetchState) {
-        getUserDetails();
-        getUserQuestions();
-        setFetchState(true);
-    }
+    // if (!fetchState) {
+    //     getUserDetails();
+    //     getUserQuestions();
+    //     setFetchState(true);
+    // }
 
     return (
         <>
@@ -133,7 +118,13 @@ const UserProfile = (userAddress) => {
                 </CardContent>
                 {Utils.getMyAddress() !== userAddress ? (
                     <CardActions>
-                        <Button size="small" variant="outlined" onClick={() => navigate(`/connect/${userDetails.userAddress}`)} startIcon={<MessageOutlined />} style={{ cursor: 'pointer' }}>
+                        <Button
+                            size="small"
+                            variant="outlined"
+                            onClick={() => navigate(`/connect/${userDetails.userAddress}`)}
+                            startIcon={<MessageOutlined />}
+                            style={{ cursor: 'pointer' }}
+                        >
                             Chat
                         </Button>
                     </CardActions>
