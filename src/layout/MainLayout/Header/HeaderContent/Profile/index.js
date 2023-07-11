@@ -78,9 +78,7 @@ const Profile = () => {
     };
 
     async function queryUserDetails(userAddress) {
-        let response = await getOrCreateUser(userAddress); //getDocument('users', userAddress);
-
-        return response;
+        return getOrCreateUser(userAddress);
     }
     const [openModal, setOpenModal] = useState(false);
     const [userCreateTx, setUserCreateTx] = useState(null);

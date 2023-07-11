@@ -165,7 +165,7 @@ export default function QuestionsTable(params) {
 
     function setRow(index) {
         setSelectedRow(index);
-        navigate(`/question/${rows[index].questionId}`);
+        navigate(`/question/${rows[index].id}`);
     }
 
     if (rows.length == 0) {

@@ -1,14 +1,31 @@
-import { collection, doc, getDoc, getDocs, query, runTransaction, where } from 'firebase/firestore/lite';
+import { and, collection, doc, getDoc, getDocs, query, runTransaction, where } from 'firebase/firestore/lite';
 
 import { db } from './firestore.conf';
 
-const getQuestionsForUser = async (collectionName, userAddress) => {
-    const response = await getDocs(query(collection(db, collectionName), where('userId', '==', userAddress)));
+const getSolvedQuestions = async (keywords) => {
+    const q = query(collection(db, 'questions'), and(where('isSolved', '==', true), where('tags', 'array-contains-any', keywords)));
+    const response = await getDocs(q);
+    if (!response.empty) {
+        return response.docs.map((q) => {
+            return {
+                id: q.id,
+                ...q.data()
+            };
+        });
+    } else {
+        return [];
+    }
+};
+
+const getQuestionsForUser = async (userAddress) => {
+    const response = await getDocs(query(collection(db, 'questions'), where('askedBy', '==', userAddress)));
     let questions;
     if (!response.empty) {
         questions = response.docs.map((q) => {
-            id: q.id;
-            item: q.data();
+            return {
+                id: q.id,
+                ...q.data()
+            };
         });
     } else {
         questions = [];
@@ -21,20 +38,27 @@ const getDocument = async (collectionName, docName) => {
 };
 
 const getOrCreateUser = async (userAddress) => {
-    const newUser = { reputation: 0, name: userAddress };
+    const newUser = {
+        reputation: 0,
+        name: userAddress
+            ? userAddress
+                  .substring(2, 4)
+                  .concat('..')
+                  .concat(userAddress.substring(userAddress.length - 3))
+            : '-'
+    };
 
     // Create a reference to the user doc.
     const userDocRef = doc(db, 'users', userAddress);
 
     try {
-        return await runTransaction(db, async (transaction) => {
+        return runTransaction(db, async (transaction) => {
             const user = await transaction.get(userDocRef);
             if (!user.exists()) {
-                const newUserRef = doc(db, 'users', userAddress);
-                transaction.set(newUserRef, newUser);
-                return newUser;
+                transaction.set(userDocRef, newUser);
+                return Promise.resolve(newUser);
             } else {
-                return user.data();
+                return Promise.resolve(user.data());
             }
         });
     } catch (e) {
@@ -44,4 +68,4 @@ const getOrCreateUser = async (userAddress) => {
     }
 };
 
-export { getQuestionsForUser, getDocument, getOrCreateUser };
+export { getSolvedQuestions, getQuestionsForUser, getDocument, getOrCreateUser };

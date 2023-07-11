@@ -2,8 +2,7 @@
 import { Typography } from '@mui/material';
 import Utils from 'utils/utils';
 
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { MessageOutlined } from '@ant-design/icons';
@@ -12,8 +11,8 @@ import MainCard from 'components/MainCard';
 import { Alert, Avatar, Button, CardActions, CardContent, Grid } from '../../../node_modules/@mui/material/index';
 
 import { useNavigate } from 'react-router-dom';
+import { getOrCreateUser, getQuestionsForUser } from '../../api/firestore-utils';
 import QuestionsTable from '../extra-pages/QuestionsTable';
-
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const tags = ['Polygon', 'Huddle01'];
@@ -27,13 +26,6 @@ const UserProfile = (userAddress) => {
 
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (userAddress) {
-            getUserDetails();
-            getUserQuestions();
-        }
-    }, []);
-
     if (!Utils.getMyAddress()) {
         return (
             <MainCard sx={{ mt: 0 }}>
@@ -46,27 +38,9 @@ const UserProfile = (userAddress) => {
         );
     }
 
-    async function fetchUserDetails() {
-        const response = await axios.post(Utils.graphAPI, {
-            query: `{
-                userUpdateds(where: { userAddress: "${userAddress}"}, first: 5) {
-                    id
-                    userAddress
-                    name
-                    pictureCID
-                    rating
-                    reputation
-                }
-            }`
-        });
-        const userDetail = response.data.data.userUpdateds[0];
-        setUserDetails(response.data.data.userUpdateds[0]);
-    }
-
     async function getUserDetails() {
         try {
-            let userDetail = fetchUserDetails();
-            console.log(userDetail);
+            let userDetail = await getOrCreateUser(userAddress);
             setUserDetails(userDetail);
         } catch (error) {
             console.error(error);
@@ -75,28 +49,17 @@ const UserProfile = (userAddress) => {
 
     async function getUserQuestions() {
         try {
-            const response = await axios.post(Utils.graphAPI, {
-                query: `{
-                    questionUpdateds(where: {creator: "${userAddress}"}, first: 5) {
-                        id
-                        creator
-                        questionId
-                        title
-                        description
-                        bounty
-                    }
-                }`
-            });
-            setUserQuestions(response.data.data.questionUpdateds);
+            const response = await getQuestionsForUser(userAddress);
+            setUserQuestions(response);
         } catch (error) {
             console.error(error);
         }
     }
-    // if (!fetchState) {
-    //     getUserDetails();
-    //     getUserQuestions();
-    //     setFetchState(true);
-    // }
+    if (!fetchState) {
+        getUserDetails();
+        getUserQuestions();
+        setFetchState(true);
+    }
 
     return (
         <>
@@ -110,9 +73,7 @@ const UserProfile = (userAddress) => {
                             <Typography variant="h1">{userDetails.name}</Typography>
                         </Grid>
                         <Grid item xs={11}>
-                            <Typography variant="h5">
-                                Reputation : {userDetails.reputation} &nbsp; | &nbsp; Rating : {userDetails.rating}/10
-                            </Typography>
+                            <Typography variant="h5">Reputation : {userDetails.reputation}</Typography>
                         </Grid>
                     </Grid>
                 </CardContent>
