@@ -8,6 +8,7 @@ const DevAutocomplete = ({ placeholder, getSuggestions }) => {
     const [open, setOpen] = useState(false);
     const [options, setOptions] = useState([]);
     const [query, setQuery] = useState('');
+    const [selectedValue, setSelectedValue] = useState(null);
     const loading = open && query.length > 2;
 
     useEffect(() => {
@@ -20,9 +21,12 @@ const DevAutocomplete = ({ placeholder, getSuggestions }) => {
         if (query.length > 2) {
             (async () => {
                 const searchResults = await getSuggestions(query); //use API call here
-
                 if (active) {
-                    setOptions(searchResults);
+                    if (options.length || searchResults.length) {
+                        // const options = [];
+                        // searchResults.forEach((result) => options.push(result.title));
+                        setOptions(searchResults);
+                    }
                 }
             })();
         }
@@ -41,6 +45,9 @@ const DevAutocomplete = ({ placeholder, getSuggestions }) => {
     return (
         <Autocomplete
             id="apibased"
+            onChange={(event, newValue) => {
+                setSelectedValue(newValue);
+            }}
             onInputChange={($event) => {
                 setOptions([]);
                 setQuery($event.target.value);
@@ -53,8 +60,8 @@ const DevAutocomplete = ({ placeholder, getSuggestions }) => {
             onClose={() => {
                 setOpen(false);
             }}
-            isOptionEqualToValue={(option, value) => option.title === value.title}
-            getOptionLabel={(option) => option.title}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            getOptionLabel={(option) => option?.title ?? ''}
             options={options}
             loading={loading}
             renderInput={(params) => (

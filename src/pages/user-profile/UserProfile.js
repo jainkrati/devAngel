@@ -2,40 +2,17 @@
 import { Typography } from '@mui/material';
 import Utils from 'utils/utils';
 
-import { useParams } from 'react-router-dom';
 import { useState } from 'react';
-import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-import { VideoCameraOutlined, MessageOutlined } from '@ant-design/icons';
+import { MessageOutlined } from '@ant-design/icons';
 // project import
 import MainCard from 'components/MainCard';
-import {
-    Avatar,
-    AvatarGroup,
-    Grid,
-    Stack,
-    Button,
-    Autocomplete,
-    TextField,
-    Box,
-    InputLabel,
-    Input,
-    FormHelperText,
-    Badge,
-    CardActions,
-    CardContent,
-    Alert
-} from '../../../node_modules/@mui/material/index';
+import { Alert, Avatar, Button, CardActions, CardContent, Grid } from '../../../node_modules/@mui/material/index';
 
-import avatar1 from 'assets/images/users/avatar-1.png';
-import avatar2 from 'assets/images/users/avatar-2.png';
-import avatar3 from 'assets/images/users/avatar-3.png';
-import avatar4 from 'assets/images/users/avatar-4.png';
-import { FormControl } from '../../../node_modules/@mui/material/index';
-
-import QuestionsTable from '../extra-pages/QuestionsTable';
 import { useNavigate } from 'react-router-dom';
-
+import { getOrCreateUser, getQuestionsForUser } from '../../api/firestore-utils';
+import QuestionsTable from '../extra-pages/QuestionsTable';
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const tags = ['Polygon', 'Huddle01'];
@@ -61,27 +38,9 @@ const UserProfile = (userAddress) => {
         );
     }
 
-    async function fetchUserDetails() {
-        const response = await axios.post(Utils.graphAPI, {
-            query: `{
-                userUpdateds(where: { userAddress: "${userAddress}"}, first: 5) {
-                    id
-                    userAddress
-                    name
-                    pictureCID
-                    rating
-                    reputation
-                }
-            }`
-        });
-        const userDetail = response.data.data.userUpdateds[0];
-        setUserDetails(response.data.data.userUpdateds[0]);
-    }
-
     async function getUserDetails() {
         try {
-            let userDetail = fetchUserDetails();
-            console.log(userDetail);
+            let userDetail = await getOrCreateUser(userAddress);
             setUserDetails(userDetail);
         } catch (error) {
             console.error(error);
@@ -90,19 +49,8 @@ const UserProfile = (userAddress) => {
 
     async function getUserQuestions() {
         try {
-            const response = await axios.post(Utils.graphAPI, {
-                query: `{
-                    questionUpdateds(where: {creator: "${userAddress}"}, first: 5) {
-                        id
-                        creator
-                        questionId
-                        title
-                        description
-                        bounty
-                    }
-                }`
-            });
-            setUserQuestions(response.data.data.questionUpdateds);
+            const response = await getQuestionsForUser(userAddress);
+            setUserQuestions(response);
         } catch (error) {
             console.error(error);
         }
@@ -125,15 +73,19 @@ const UserProfile = (userAddress) => {
                             <Typography variant="h1">{userDetails.name}</Typography>
                         </Grid>
                         <Grid item xs={11}>
-                            <Typography variant="h5">
-                                Reputation : {userDetails.reputation} &nbsp; | &nbsp; Rating : {userDetails.rating}/10
-                            </Typography>
+                            <Typography variant="h5">Reputation : {userDetails.reputation}</Typography>
                         </Grid>
                     </Grid>
                 </CardContent>
                 {Utils.getMyAddress() !== userAddress ? (
                     <CardActions>
-                        <Button size="small" variant="outlined" onClick={() => navigate(`/connect/${userDetails.userAddress}`)} startIcon={<MessageOutlined />} style={{ cursor: 'pointer' }}>
+                        <Button
+                            size="small"
+                            variant="outlined"
+                            onClick={() => navigate(`/connect/${userDetails.userAddress}`)}
+                            startIcon={<MessageOutlined />}
+                            style={{ cursor: 'pointer' }}
+                        >
                             Chat
                         </Button>
                     </CardActions>

@@ -7,9 +7,10 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import ScrollableCards from 'components/ScrollableCards';
 import { useState } from 'react';
+import { getSolvedQuestions } from '../../api/firestore-utils';
 import DevAutocomplete from '../../components/DevAutocomplete';
 import MainCard from '../../components/MainCard';
-const LQData = [
+let LQData = [
     { url: 'https://www.youtube.com/embed/QFaFIcGhPoM?list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3', text: 'Intro1' },
     { url: 'https://www.youtube.com/watch?v=9hb_0TZ_MVI&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=2&pp=iAQB', text: 'Intro2' },
     { url: 'https://www.youtube.com/watch?v=9VIiLJL0H4Y&list=PLC3y8-rFHvwgg3vaYJgHGnModB54rxOk3&index=3&pp=iAQB', text: 'Intro3' },
@@ -20,16 +21,22 @@ const LQData = [
 const SolvedQuestions = () => {
     const [selectedCard, setSelectedCard] = useState(null);
     const placeholder = 'Search for tags or keywords in previously answered questions (min 3 characters required), use the';
-
-    const getSuggestions = (query) => {
-        console.log(query);
-        return new Promise((resolve) => {
-            const values = [
-                { title: 'The Shawshank Redemption', year: 1994 },
-                { title: 'The Godfather', year: 1972 }
-            ];
-            setTimeout(resolve(values), 2000);
-        });
+    const [suggestions, setSuggestions] = useState([]);
+    const getSuggestions = async (query) => {
+        if (query && query.trim()) {
+            const words = query.split(/(\s.)/);
+            if (words.length > 10) words = words.filter((word, index) => index < 11);
+            const values = await getSolvedQuestions(words);
+            setSuggestions(values);
+            return values;
+        }
+        // return new Promise((resolve) => {
+        //     const values = [
+        //         { title: 'The Shawshank Redemption', year: 1994 },
+        //         { title: 'The Godfather', year: 1972 }
+        //     ];
+        //     setTimeout(resolve(values), 2000);
+        // });
     };
 
     const handleCardClick = (source, details) => {
