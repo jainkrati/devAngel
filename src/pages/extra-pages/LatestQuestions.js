@@ -1,9 +1,9 @@
 // material-ui
 // project import
+import { getLatestQuestions } from 'api/firestore-utils';
 import MainCard from 'components/MainCard';
-import QuestionsTable from './QuestionsTable';
-
 import { useState } from 'react';
+import QuestionsTable from './QuestionsTable';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
@@ -13,20 +13,11 @@ const LatestQuestions = () => {
 
     async function getUserQuestions() {
         try {
-            // const response = await axios.post(Utils.graphAPI, {
-            //     query: `{
-            //         questionUpdateds(first: 50) {
-            //             id
-            //             creator
-            //             questionId
-            //             title
-            //             description
-            //             bounty
-            //         }
-            //     }`
-            // });
-            // setLatestQuestions(response.data.data.questionUpdateds);
-            //setFetchState(true);
+            const response = await getLatestQuestions();
+            if (response) {
+                setFetchState(true);
+                setLatestQuestions(response);
+            }
         } catch (error) {
             console.error(error);
         }

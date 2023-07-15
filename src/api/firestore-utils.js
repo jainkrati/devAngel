@@ -1,6 +1,32 @@
-import { and, collection, doc, getDoc, getDocs, query, runTransaction, where } from 'firebase/firestore/lite';
+import { and, collection, doc, getDoc, getDocs, orderBy, query, runTransaction, where } from 'firebase/firestore/lite';
 
 import { db } from './firestore.conf';
+
+const getShortAddress = (userAddress) => {
+    if (userAddress) {
+        return userAddress
+            .substring(2, 4)
+            .concat('..')
+            .concat(userAddress.substring(userAddress.length - 2));
+    } else {
+        return '-';
+    }
+};
+
+const getLatestQuestions = async () => {
+    const q = query(getCollection('questions'), orderBy('createdOn', 'desc'));
+    const response = await getDocs(q);
+    if (!response.empty) {
+        return response.docs.map((q) => {
+            return {
+                id: q.id,
+                ...q.data()
+            };
+        });
+    } else {
+        return [];
+    }
+};
 
 const getSolvedQuestions = async (keywords) => {
     const q = query(collection(db, 'questions'), and(where('isSolved', '==', true), where('tags', 'array-contains-any', keywords)));
@@ -33,19 +59,18 @@ const getQuestionsForUser = async (userAddress) => {
     return questions;
 };
 
-const getDocument = async (collectionName, docName) => {
-    return await getDoc(doc(db, collectionName, docName));
+const getDocument = (collectionName, docName) => {
+    return getDoc(doc(db, collectionName, docName));
+};
+
+const getCollection = (collectionName) => {
+    return collection(db, collectionName);
 };
 
 const getOrCreateUser = async (userAddress) => {
     const newUser = {
         reputation: 0,
-        name: userAddress
-            ? userAddress
-                  .substring(2, 4)
-                  .concat('..')
-                  .concat(userAddress.substring(userAddress.length - 3))
-            : '-'
+        name: getShortAddress(userAddress)
     };
 
     // Create a reference to the user doc.
@@ -58,7 +83,8 @@ const getOrCreateUser = async (userAddress) => {
                 transaction.set(userDocRef, newUser);
                 return Promise.resolve(newUser);
             } else {
-                return Promise.resolve(user.data());
+                const userData = user.data();
+                return Promise.resolve({ ...userData, ...{ name: getShortAddress(userAddress) } });
             }
         });
     } catch (e) {
@@ -68,4 +94,4 @@ const getOrCreateUser = async (userAddress) => {
     }
 };
 
-export { getSolvedQuestions, getQuestionsForUser, getDocument, getOrCreateUser };
+export { getLatestQuestions, getSolvedQuestions, getQuestionsForUser, getDocument, getOrCreateUser };
