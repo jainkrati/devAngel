@@ -41,6 +41,7 @@ const UserProfile = (userAddress) => {
     async function getUserDetails() {
         try {
             let userDetail = await getOrCreateUser(userAddress);
+
             setUserDetails(userDetail);
         } catch (error) {
             console.error(error);
