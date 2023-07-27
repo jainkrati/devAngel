@@ -1,4 +1,4 @@
-import { and, collection, doc, getDoc, getDocs, orderBy, query, runTransaction, where } from 'firebase/firestore/lite';
+import { and, collection, doc, getDoc, getDocs, limit, orderBy, query, runTransaction, where } from 'firebase/firestore/lite';
 
 import { db } from './firestore.conf';
 
@@ -14,7 +14,7 @@ const getShortAddress = (userAddress) => {
 };
 
 const getLatestQuestions = async () => {
-    const q = query(getCollection('questions'), orderBy('createdOn', 'desc'));
+    const q = query(getCollection('questions'), orderBy('createdOn', 'desc'), limit(10));
     const response = await getDocs(q);
     if (!response.empty) {
         return response.docs.map((q) => {
