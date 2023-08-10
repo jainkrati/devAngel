@@ -88,6 +88,10 @@ const MainRoutes = {
             element: <Connect />
         },
         {
+            path: 'chats',
+            element: <Connect />
+        },
+        {
             path: 'profile',
             element: <UserProfile />
         },

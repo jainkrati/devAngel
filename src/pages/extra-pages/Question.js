@@ -1,6 +1,6 @@
-import { useParams } from 'react-router-dom';
-import { useState } from 'react';
 import axios from 'axios';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 // material-ui
 import { Typography } from '@mui/material';
@@ -9,39 +9,14 @@ import Utils from 'utils/utils';
 import HuddleApp from '../../huddle/huddleApp';
 
 // project import
-import MainCard from 'components/MainCard';
-import {
-    Avatar,
-    AvatarGroup,
-    Grid,
-    Stack,
-    Button,
-    Autocomplete,
-    TextField,
-    Box,
-    InputLabel,
-    Input,
-    FormHelperText,
-    Table,
-    TableRow,
-    TableBody,
-    Card,
-    CardContent,
-    CardActionArea,
-    CardActions,
-    CardHeader,
-    Paper
-} from '../../../node_modules/@mui/material/index';
 import Chip from '@mui/material/Chip';
+import MainCard from 'components/MainCard';
+import { Avatar, Button, Card, CardActions, CardContent, CardHeader, Grid, Stack } from '../../../node_modules/@mui/material/index';
 
 import avatar1 from 'assets/images/users/avatar-1.png';
 import avatar2 from 'assets/images/users/avatar-2.png';
-import avatar3 from 'assets/images/users/avatar-3.png';
-import avatar4 from 'assets/images/users/avatar-4.png';
-import { FormControl } from '../../../node_modules/@mui/material/index';
-import TableCell from 'themes/overrides/TableCell';
-import Chat from './chat/chat';
 import LivePeerApp from 'livepeer/LivePeerApp';
+import Chat from './chat/chat';
 
 // ==============================|| SAMPLE PAGE ||============================== //
 
@@ -180,7 +155,7 @@ const Question = () => {
 
     function showProposals() {
         return (
-            <MainCard sx={{ mt: 2 }} title="Proposals">
+            <MainCard sx={{ mt: 2 }} title="Interested experts">
                 <Stack spacing={3}>
                     <Grid container justifyContent="space-between" alignItems="center">
                         <Grid item>
@@ -238,7 +213,9 @@ const Question = () => {
         return (
             <Card sx={{ mt: 2 }}>
                 {livePeer ? (
-                    <Typography variant="h3" sx={{ m: 3, mb: 0 }}>Mint Call Recording as NFT with LivePeer</Typography> 
+                    <Typography variant="h3" sx={{ m: 3, mb: 0 }}>
+                        Mint Call Recording as NFT with LivePeer
+                    </Typography>
                 ) : (
                     <CardHeader
                         avatar={<Avatar aria-label="recipe" src={null} alt=""></Avatar>}

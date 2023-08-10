@@ -1,10 +1,12 @@
 // assets
-import { UserOutlined, GroupOutlined } from '@ant-design/icons';
+import { GroupOutlined, UserOutlined } from '@ant-design/icons';
+import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 
 // icons
 const icons = {
     UserOutlined,
-    GroupOutlined
+    GroupOutlined,
+    QuestionAnswerIcon
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -14,6 +16,14 @@ const profiles = {
     title: 'Profile',
     type: 'group',
     children: [
+        {
+            id: 'my-chats',
+            title: 'My Chats',
+            type: 'item',
+            url: '/chats',
+            icon: icons.QuestionAnswerIcon,
+            breadcrumbs: true
+        },
         {
             id: 'my-profile',
             title: 'My Profile',

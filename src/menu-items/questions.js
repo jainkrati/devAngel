@@ -1,12 +1,12 @@
 // assets
-import { QuestionOutlined, QuestionCircleOutlined, QuestionCircleFilled } from '@ant-design/icons';
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import { QuestionCircleFilled, QuestionCircleOutlined, QuestionOutlined } from '@ant-design/icons';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 // icons
 const icons = {
     QuestionOutlined,
     QuestionCircleOutlined,
     QuestionCircleFilled,
-    QuestionAnswerIcon
+    LiveHelpIcon
 };
 
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
@@ -45,7 +45,7 @@ const questions = {
             title: 'Solved Questions',
             type: 'item',
             url: '/solved-questions',
-            icon: icons.QuestionAnswerIcon,
+            icon: icons.LiveHelpIcon,
             breadcrumbs: true
         }
     ]
